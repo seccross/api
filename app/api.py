@@ -1,9 +1,9 @@
 from sanic import Sanic, response
 from sanic.request import File
-import subprocess
 import os
 import json
 import uuid
+import asyncio
 from .analysis import run_myth
 
 def create_app(storage_dir):
@@ -35,7 +35,7 @@ def create_app(storage_dir):
         session_dir = dir_path(request_id)
 
          # 异步执行myth分析
-        await run_myth(file, contract_name, args, session_dir)
+        asyncio.create_task(run_myth(file, contract_name, args, session_dir))
     
         # 返回request id
         return response.json({"request_id": request_id})
@@ -52,6 +52,6 @@ def create_app(storage_dir):
             return response.json({"result": result})
         if os.path.exists(session_dir):
             return response.json({"status": "Processing"}, status=202)
-        return response.json({"error": "Result not found or still processing"}, status=202)
+        return response.json({"error": "Request not found"}, status=404)
 
     return app
