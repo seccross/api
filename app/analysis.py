@@ -34,4 +34,4 @@ async def run_myth(file, contract_name, args, session_dir):
         result_file.write(stdout)
         # if process.returncode == 0:
         # result_file.write(f"Error: ")
-        result_file.write(stderr)
+        # result_file.write(stderr)
