@@ -45,6 +45,12 @@ def create_app(storage_dir):
         # 构建结果文件的路径
         session_dir = dir_path(request_id)
         result_file_path = os.path.join(session_dir, f"result.json")
+        error_file_path = os.path.join(session_dir, f"error.json")
+
+        if os.path.exists(error_file_path):
+            with open(error_file_path, 'r') as file:
+                error = file.read()
+            return response.json({"error": result}, status=422)
 
         if os.path.exists(result_file_path):
             with open(result_file_path, 'r') as file:

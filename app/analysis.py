@@ -12,6 +12,7 @@ async def run_myth(file, contract_name, args, session_dir):
     original_file_name = file.name
 
     result_file_path = os.path.join(session_dir, f"result.json")
+    err_file_path = os.path.join(session_dir, f"error.json")
     # 将上传的文件也保存在相同的目录下
     saved_file_path = os.path.join(session_dir, original_file_name)
 
@@ -29,9 +30,8 @@ async def run_myth(file, contract_name, args, session_dir):
     )
     stdout, stderr = await process.communicate()
 
-    with open(result_file_path, 'wb') as result_file:
-        
+    with open(result_file_path, 'wb') as result_file:  
         result_file.write(stdout)
-        # if process.returncode == 0:
-        # result_file.write(f"Error: ")
-        # result_file.write(stderr)
+    if process.returncode == 0:
+        with open(err_file_path, 'wb') as err_file:
+            err_file.write(stderr)
