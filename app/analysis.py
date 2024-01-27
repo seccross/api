@@ -2,7 +2,8 @@ import asyncio
 import subprocess
 import os
 
-myth = '/usr/local/bin/myth analyze --parallel-solving'
+myth = '/usr/local/bin/myth'
+params = ['analyze', '--parallel-solving']
 
 async def run_myth(file, contract_name, args, session_dir):
 
@@ -18,11 +19,11 @@ async def run_myth(file, contract_name, args, session_dir):
     with open(saved_file_path, 'wb') as saved_file:
         saved_file.write(file.body)
     
-    args = [f"{saved_file_path}:{contract_name}"] + args
+    params += [f"{saved_file_path}:{contract_name}"] + args
 
     # 异步运行myth程序
     process = await asyncio.create_subprocess_exec(
-        myth, *args,
+        myth, *params,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
