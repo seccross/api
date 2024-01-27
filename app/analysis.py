@@ -3,7 +3,7 @@ import subprocess
 import os
 
 myth = '/usr/local/bin/myth'
-params = ['analyze', '--parallel-solving', '-o json']
+params = ['analyze', '--parallel-solving', '-o', 'jsonv2']
 
 async def run_myth(file, contract_name, args, session_dir):
 
