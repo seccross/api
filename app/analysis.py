@@ -32,5 +32,5 @@ async def run_myth(file, contract_name, args, session_dir):
     with open(result_file_path, 'w') as result_file:
         
         result_file.write(stdout)
-        if process.returncode == 0:
-            result_file.write(f"Error: {stderr.decode()}")
+        # if process.returncode == 0:
+        result_file.write(f"Error: {stderr}")
