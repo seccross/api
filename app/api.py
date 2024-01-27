@@ -15,11 +15,11 @@ def create_app(storage_dir):
 
     @app.post("/analyze")
     async def analyze_file(request):
-        file_param = request.files.get('file')
+        file = request.files.get('file')
         contract_name = request.form.get('contract_name')  # 假设参数以JSON格式传递
         args = request.form.get('args')  # 假设参数以JSON格式传递
 
-        if not file_param:
+        if not file:
             return response.json({"error": "No file provided"}, status=400)
 
         # 解析参数
@@ -31,7 +31,6 @@ def create_app(storage_dir):
          # 确保存储目录存在
         os.makedirs(storage_dir, exist_ok=True)
 
-        file: File = file_param[0]
         request_id = str(uuid.uuid4())
         session_dir = dir_path(request_id)
 
