@@ -49,12 +49,12 @@ def create_app(storage_dir):
 
         if os.path.exists(error_file_path):
             with open(error_file_path, 'r') as file:
-                error = file.read()
-            return response.json({"error": result}, status=422)
+                error = json.load(file)
+            return response.json({"error": error}, status=422)
 
         if os.path.exists(result_file_path):
             with open(result_file_path, 'r') as file:
-                result = file.read()
+                result = json.load(file)
             return response.json({"result": result})
         if os.path.exists(session_dir):
             return response.json({"status": "Processing"}, status=202)
