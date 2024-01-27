@@ -48,7 +48,7 @@ def create_app(storage_dir):
         error_file_path = os.path.join(session_dir, f"error.json")
 
         if os.path.exists(error_file_path):
-            with open(error_file_path, 'r') as file:
+            with open(result_file_path, 'r') as file:
                 error = json.load(file)
             return response.json({"error": error}, status=422)
 
