@@ -35,7 +35,7 @@ def create_app(storage_dir):
         session_dir = dir_path(request_id)
 
          # 异步执行myth分析
-        request_id = await run_myth(file, contract_name, args, session_dir)
+        await run_myth(file, contract_name, args, session_dir)
     
         # 返回request id
         return response.json({"request_id": request_id})
