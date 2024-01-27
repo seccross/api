@@ -19,11 +19,11 @@ async def run_myth(file, contract_name, args, session_dir):
     with open(saved_file_path, 'wb') as saved_file:
         saved_file.write(file.body)
     
-    params += [f"{saved_file_path}:{contract_name}"] + args
+    args = params + [f"{saved_file_path}:{contract_name}"] + args
 
     # 异步运行myth程序
     process = await asyncio.create_subprocess_exec(
-        myth, *params,
+        myth, *args,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
