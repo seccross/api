@@ -97,7 +97,7 @@ def create_app(storage_dir):
         ok_file_path = os.path.join(session_dir, f"OK")
 
         if os.path.exists(error_file_path):
-            with open(result_file_path, 'r') as file:
+            with open(error_file_path, 'r') as file:
                 error = file.read()
             return response.json({"error": error}, status=422)
         
