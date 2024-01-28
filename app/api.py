@@ -88,7 +88,7 @@ def create_app(storage_dir):
         return response.json({"request_id": request_id})
     
     @app.get("/xg/result/<request_id>")
-    async def get_result(request, request_id):
+    async def xg_get_result(request, request_id):
         # 构建结果文件的路径
         session_dir = dir_path(request_id)
         result_file_path = os.path.join(session_dir, f"result.json")
