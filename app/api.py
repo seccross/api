@@ -9,8 +9,8 @@ from .analysis import run_myth
 def create_app(storage_dir):
     app = Sanic("MythAPI")
 
-    def dir_path(request_id):
-        return os.path.join(storage_dir, request_id[:2], request_id[2:4], request_id[4:])
+    def dir_path(job_name, request_id):
+        return os.path.join(storage_dir, job_name, request_id[:2], request_id[2:4], request_id[4:])
 
 
     @app.post("/analyze")
@@ -32,7 +32,7 @@ def create_app(storage_dir):
         os.makedirs(storage_dir, exist_ok=True)
 
         request_id = str(uuid.uuid4())
-        session_dir = dir_path(request_id)
+        session_dir = dir_path("tsniffer", request_id)
 
          # 异步执行myth分析
         asyncio.create_task(run_myth(file, contract_name, args, session_dir))
@@ -43,7 +43,7 @@ def create_app(storage_dir):
     @app.get("/result/<request_id>")
     async def get_result(request, request_id):
         # 构建结果文件的路径
-        session_dir = dir_path(request_id)
+        session_dir = dir_path("tsniffer", request_id)
         result_file_path = os.path.join(session_dir, f"result.json")
         error_file_path = os.path.join(session_dir, f"error.json")
 
@@ -79,7 +79,7 @@ def create_app(storage_dir):
         os.makedirs(storage_dir, exist_ok=True)
 
         request_id = str(uuid.uuid4())
-        session_dir = dir_path(request_id)
+        session_dir = dir_path("xguard", request_id)
 
          # 异步执行myth分析
         asyncio.create_task(run_myth(file, solc_version, args, session_dir))
@@ -90,7 +90,7 @@ def create_app(storage_dir):
     @app.get("/xg/result/<request_id>")
     async def xg_get_result(request, request_id):
         # 构建结果文件的路径
-        session_dir = dir_path(request_id)
+        session_dir = dir_path("xguard", request_id)
         result_file_path = os.path.join(session_dir, f"result.json")
         report_file_path = os.path.join(session_dir, f"report.md")
         error_file_path = os.path.join(session_dir, f"error.json")
