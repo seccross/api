@@ -4,7 +4,7 @@ import os
 import json
 import uuid
 import asyncio
-from .analysis import run_myth
+from .analysis import run_myth, run_slither
 
 def create_app(storage_dir):
     app = Sanic("MythAPI")
@@ -82,7 +82,7 @@ def create_app(storage_dir):
         session_dir = dir_path("xguard", request_id)
 
          # 异步执行myth分析
-        asyncio.create_task(run_myth(file, solc_version, args, session_dir))
+        asyncio.create_task(run_slither(file, solc_version, args, session_dir))
     
         # 返回request id
         return response.json({"request_id": request_id})
@@ -98,7 +98,7 @@ def create_app(storage_dir):
 
         if os.path.exists(error_file_path):
             with open(result_file_path, 'r') as file:
-                error = json.load(file)
+                error = file.read()
             return response.json({"error": error}, status=422)
         
         pass_check = True if os.path.exists(ok_file_path) else False
