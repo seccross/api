@@ -68,6 +68,16 @@ def create_app(storage_dir):
     async def xg_analyze_file(request):
         file = request.files.get('file')
         solc_version = request.form.get('solc_version')  # 假设参数以JSON格式传递
+        
+        send_funcs = request.form.get('solc_version')
+        receive_funcs = request.form.get('receive_funcs')
+        events = request.form.get('events')
+        send_stores = request.form.get('send_stores')
+
+        env_vars = {'SEND_FUNCS': send_funcs, 'RECEIVE_FUNCS': receive_funcs, 'EVENTS': events, 'SEND_STORES': send_stores}
+        env = {k: v for k, v in env_vars.items() if v is not None}
+        
+        checks = request.form.get('check')
         args = request.form.get('args')  # 假设参数以JSON格式传递
 
         if not file:
@@ -86,7 +96,7 @@ def create_app(storage_dir):
         session_dir = dir_path("xguard", request_id)
 
          # 异步执行myth分析
-        asyncio.create_task(run_slither(file, solc_version, args, session_dir))
+        asyncio.create_task(run_slither(file, solc_version, env, checks, args, session_dir))
     
         # 返回request id
         return response.json({"request_id": request_id})
