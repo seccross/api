@@ -60,9 +60,9 @@ def create_app(storage_dir):
             return response.json({"status": "Processing"}, status=202)
         return response.json({"error": "Request not found"}, status=404)
     
-    @app.route('/favicon.ico')
-    async def favicon(request):
-        return await response.file('/var/mythapi/favicon.ico')
+    # @app.route('/favicon.ico')
+    # async def favicon(request):
+    #     return await response.file('/var/mythapi/favicon.ico')
     
     @app.post("/xg/analyze")
     async def xg_analyze_file(request):
