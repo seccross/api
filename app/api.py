@@ -69,7 +69,7 @@ def create_app(storage_dir):
         file = request.files.get('file')
         solc_version = request.form.get('solc_version')  # 假设参数以JSON格式传递
         
-        send_funcs = request.form.get('solc_version')
+        send_funcs = request.form.get('send_funcs')
         receive_funcs = request.form.get('receive_funcs')
         events = request.form.get('events')
         send_stores = request.form.get('send_stores')
