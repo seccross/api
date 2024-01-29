@@ -113,7 +113,7 @@ def create_app(storage_dir):
         if os.path.exists(error_file_path):
             with open(error_file_path, 'r') as file:
                 error = file.read()
-            return response.json({"error": error}, status=422)
+            return response.json({"error": error}, status=500)
         
         pass_check = True if os.path.exists(ok_file_path) else False
         
@@ -127,7 +127,7 @@ def create_app(storage_dir):
         if os.path.exists(session_dir):
             return response.json({"status": "Processing"}, status=202)
         
-        return response.json({"error": "Request not found"}, status=500)
+        return response.json({"error": "Request not found"}, status=404)
     
     @app.route('/xg/favicon.ico')
     async def favicon(request):
