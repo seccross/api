@@ -44,6 +44,7 @@ async def run_myth(file, contract_name, args, session_dir):
         with open(err_file_path, 'wb') as err_file:
             err_file.write(stderr)
 
+# /usr/local/xguard2/bin/slither CrosschainSniffer/examples/contract/Meter.sol --detect incorrect-event  --solc-solcs-select 0.6.4
 # 1: 异常退出；2：发现bug；0：未发现bug
 async def run_slither(file, solc_version, env, checks, args, session_dir):
 
@@ -74,6 +75,8 @@ async def run_slither(file, solc_version, env, checks, args, session_dir):
         detects += ',' + XG_T3
     
     args =  [f"{saved_file_path}", ] + [XG_DETECT, detects] + XG_PARAMS + ["--solc-solcs-select", f"{solc_version}", "--json", f"{result_file_path}"] + args
+
+    env.update(os.environ)
 
     # 异步运行myth程序
     process = await asyncio.create_subprocess_exec(
