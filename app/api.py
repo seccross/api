@@ -1,5 +1,6 @@
 from sanic import Sanic, response
 from sanic.request import File
+from sanic.response import FileResponse
 import os
 import json
 import uuid
@@ -60,6 +61,10 @@ def create_app(storage_dir):
             return response.json({"status": "Processing"}, status=202)
         return response.json({"error": "Request not found"}, status=404)
     
+    @app.route('/favicon.ico')
+    async def favicon(request):
+        return await FileResponse('/var/mythapi/favicon.ico')
+    
     @app.post("/xg/analyze")
     async def xg_analyze_file(request):
         file = request.files.get('file')
@@ -114,5 +119,9 @@ def create_app(storage_dir):
             return response.json({"status": "Processing"}, status=202)
         
         return response.json({"error": "Request not found"}, status=404)
+    
+    @app.route('/xg/favicon.ico')
+    async def favicon(request):
+        return await FileResponse('/var/mythapi/favicon.ico')
 
     return app
