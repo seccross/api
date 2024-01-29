@@ -127,7 +127,7 @@ def create_app(storage_dir):
         if os.path.exists(session_dir):
             return response.json({"status": "Processing"}, status=202)
         
-        return response.json({"error": "Request not found"}, status=404)
+        return response.json({"error": "Request not found"}, status=500)
     
     @app.route('/xg/favicon.ico')
     async def favicon(request):
