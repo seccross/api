@@ -125,7 +125,7 @@ def create_app(storage_dir):
                 return response.json({"passed": pass_check, "result": result, "report": report})
         
         if os.path.exists(session_dir):
-            return response.json({"status": "Processing"}, status=202)
+            return response.json({"status": "Processing"}, status=222)
         
         return response.json({"error": "Request not found"}, status=404)
     
