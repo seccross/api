@@ -1,5 +1,6 @@
 from sanic import Sanic, response
 from sanic.request import File
+from sanic_cors import CORS
 import os
 import json
 import uuid
@@ -8,6 +9,7 @@ from .analysis import run_myth, run_slither
 
 def create_app(storage_dir):
     app = Sanic("MythAPI")
+    CORS(app)
 
     def dir_path(job_name, request_id):
         return os.path.join(storage_dir, job_name, request_id[:2], request_id[2:4], request_id[4:])
