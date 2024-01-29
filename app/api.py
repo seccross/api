@@ -113,7 +113,7 @@ def create_app(storage_dir):
         if os.path.exists(error_file_path):
             with open(error_file_path, 'r') as file:
                 error = file.read()
-            return response.json({"error": error}, status=255)
+            return response.json({"error": error}, status=201)
         
         pass_check = True if os.path.exists(ok_file_path) else False
         
