@@ -70,9 +70,13 @@ async def run_slither(file, solc_version, env, checks, args, session_dir):
     if 'T1' in check_list:
         detects += XG_T1
     if 'T2' in check_list:
-        detects += ',' + XG_T2
+        if detects:
+            detects += ','
+        detects += XG_T2
     if 'T3' in check_list:
-        detects += ',' + XG_T3
+        if detects:
+            detects += ','
+        detects += XG_T3
     
     args =  [f"{saved_file_path}", ] + [XG_DETECT, detects] + XG_PARAMS + ["--solc-solcs-select", f"{solc_version}", "--json", f"{result_file_path}"] + args
 
