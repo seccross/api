@@ -119,7 +119,7 @@ def create_app(storage_dir):
         
         pass_check = True if os.path.exists(ok_file_path) else False
         
-        if os.path.exists(result_file_path):
+        if os.path.exists(result_file_path) and os.path.exists(report_file_path):
             with open(result_file_path, 'r') as file:
                 result = json.load(file)
                 with open(report_file_path, 'r') as file:
